@@ -40,7 +40,7 @@ public class BasicRulesTester extends Assert {
     /**
      * Tests class inheritance ancestor.
      *
-     * @param ancestor     ancestor class
+     * @param ancestor ancestor class
      * @param checkedClass class to be checked
      */
     public static void testAncestor(Class ancestor, Class checkedClass) {

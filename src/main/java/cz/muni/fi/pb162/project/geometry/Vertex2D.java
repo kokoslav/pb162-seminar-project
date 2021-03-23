@@ -15,11 +15,12 @@ public class Vertex2D {
 
     private double x;
     private double y;
-    
+
     /**
      * Constructor
      * <p>
      * this method is used for creating a vertex
+     *
      * @param x the X coordinate of the vertex
      * @param y the Y coordinate of the vertex
      */
@@ -43,12 +44,13 @@ public class Vertex2D {
     public void setY(double y) {
         this.y = y;
     }
-    
+
     /**
      * Returns middle vertex
      * <p>
-     * Returns the middle vertex in between the one this method has been called on
-     * and the one in the parameter of the method
+     * Returns the middle vertex in between the one this method has been called
+     * on and the one in the parameter of the method
+     *
      * @param vertex second vertex
      * @return Vertex2D that is in the middle of the first and second vertex
      */

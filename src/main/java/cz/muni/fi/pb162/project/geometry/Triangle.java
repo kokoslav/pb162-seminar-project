@@ -64,7 +64,7 @@ public class Triangle {
      * Divides a triangle if it hasn't been divided already Puts the created
      * subTriangles into arrayOfTriangles
      *
-     * @return false if triangle has already been divided true if it hasn't
+     * @return false if triangle has already been divided, true if it hasn't
      */
     public boolean divide() {
         if (this.isDivided()) {
@@ -85,7 +85,7 @@ public class Triangle {
     /**
      * Returns if triangle has been divided already or not
      * <p>
-     * @return true if the triangle has been divided already false if it hasn't
+     * @return true if the triangle has been divided already, false if it hasn't
      */
     public boolean isDivided() {
         return this.getSubTriangle(0) != null;
@@ -95,7 +95,7 @@ public class Triangle {
      * Returns a subTriangles created by division
      * <p>
      * @param index of the subTriangles we want to be returned
-     * @return one of the 3 subTriangles indicated by index null if triangle
+     * @return one of the 3 subTriangles indicated by index, null if triangle
      * hasn't been divided yet
      */
     public Triangle getSubTriangle(int index) {

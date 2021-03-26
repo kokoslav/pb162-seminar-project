@@ -13,8 +13,21 @@ package cz.muni.fi.pb162.project.geometry;
  */
 public class Vertex2D {
 
-    private double x = 0;
-    private double y = 0;
+    private double x;
+    private double y;
+
+    /**
+     * Constructor
+     * <p>
+     * this method is used for creating a vertex
+     *
+     * @param x the X coordinate of the vertex
+     * @param y the Y coordinate of the vertex
+     */
+    public Vertex2D(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
 
     public double getX() {
         return x;
@@ -33,25 +46,16 @@ public class Vertex2D {
     }
 
     /**
-     * Shifts the vertex by another vertex coordinates
+     * Returns middle vertex
      * <p>
-     * Sets x1 as (x1 + x2) Sets y1 as (y1 + y2)
-     * <p>
-     * @param vertex vertex by whose parameters will the Vertex2D shift
+     * Returns the middle vertex in between the one this method has been called
+     * on and the one in the parameter of the method
      *
+     * @param vertex second vertex
+     * @return Vertex2D that is in the middle of the first and second vertex
      */
-    public void move(Vertex2D vertex) {
-        this.x += vertex.x;
-        this.y += vertex.y;
-    }
-
-    /**
-     * Returns the sum of both parameters of a vertex
-     * <p>
-     * @return sum of both parameters
-     */
-    double sumCoordinates() {
-        return x + y;
+    public Vertex2D createMiddle(Vertex2D vertex) {
+        return new Vertex2D((this.x + vertex.x) / 2, (this.y + vertex.y) / 2);
     }
 
     /**
@@ -59,7 +63,8 @@ public class Vertex2D {
      * <p>
      * @return string representation of a vertex
      */
-    public String getInfo() {
+    @Override
+    public String toString() {
         return "[" + this.x + ", " + this.y + "]";
     }
 

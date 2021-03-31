@@ -11,8 +11,9 @@ package cz.muni.fi.pb162.project.geometry;
  */
 public class Triangle {
 
-    private Vertex2D[] arrayOfVertices = new Vertex2D[3];
-    private Triangle[] arrayOfTriangles = new Triangle[3];
+    private final Vertex2D[] arrayOfVertices = new Vertex2D[3];
+    private final Triangle[] arrayOfTriangles = new Triangle[3];
+    private static final double DEVIATION = 0.001; 
 
     /**
      * Constructor
@@ -28,6 +29,21 @@ public class Triangle {
         this.arrayOfVertices[1] = v1;
         this.arrayOfVertices[2] = v2;
     }
+    
+    /**
+     * Constructor
+     * <p>
+     * this method is used for creating a triangle and then dividing it
+     *
+     * @param v0 first vertex of a triangle
+     * @param v1 second vertex of a triangle
+     * @param v2 third vertex of a triangle
+     * @param depth depth of division
+     */
+    public Triangle(Vertex2D v0, Vertex2D v1, Vertex2D v2, int depth) {
+        this(v0, v1, v2);
+        this.divide(depth);
+    }
 
     /**
      * Returns one vertex of a triangle
@@ -42,20 +58,6 @@ public class Triangle {
             return null;
         }
         return this.arrayOfVertices[index];
-    }
-
-    /**
-     * Sets one vertex of a triangle
-     * <p>
-     * sets one of the vertices, indicated by index
-     *
-     * @param index of the vertex we want to be changed
-     * @param vertex that will replace the vertex indicated by index
-     */
-    void setVertex(int index, Vertex2D vertex) {
-        if ((index >= 0) && (index <= 2)) {
-            this.arrayOfVertices[index] = vertex;
-        }
     }
 
     /**
@@ -81,6 +83,16 @@ public class Triangle {
                 this.arrayOfVertices[2]);
         return true;
     }
+    
+    void divide(int depth) {
+        if (depth <= 0){
+            return;
+        }
+        this.divide();
+        this.arrayOfTriangles[0].divide(depth - 1);
+        this.arrayOfTriangles[1].divide(depth - 1);
+        this.arrayOfTriangles[2].divide(depth - 1);
+    }
 
     /**
      * Returns if triangle has been divided already or not
@@ -104,7 +116,22 @@ public class Triangle {
         }
         return this.arrayOfTriangles[index];
     }
-
+    
+    
+    /**
+     * Returns if triangle is equilateral or not
+     * <p>
+     * @return true if the triangle is equilateral, false if it isn't
+     */
+    boolean isEquilateral(){
+        double sideA = this.arrayOfVertices[0].distance(this.arrayOfVertices[1]);
+        double sideB = this.arrayOfVertices[1].distance(this.arrayOfVertices[2]);
+        double sideC = this.arrayOfVertices[2].distance(this.arrayOfVertices[0]);
+        return (Math.abs(sideA - sideB) < DEVIATION) && 
+               (Math.abs(sideB - sideC) < DEVIATION) && 
+               (Math.abs(sideC - sideA) < DEVIATION);
+    }
+    
     /**
      * Returns the string representation of a triangle
      * <p>

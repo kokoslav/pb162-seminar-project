@@ -13,8 +13,8 @@ package cz.muni.fi.pb162.project.geometry;
  */
 public class Vertex2D {
 
-    private double x;
-    private double y;
+    private final double x;
+    private final double y;
 
     /**
      * Constructor
@@ -37,14 +37,6 @@ public class Vertex2D {
         return y;
     }
 
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
     /**
      * Returns middle vertex
      * <p>
@@ -57,7 +49,21 @@ public class Vertex2D {
     public Vertex2D createMiddle(Vertex2D vertex) {
         return new Vertex2D((this.x + vertex.x) / 2, (this.y + vertex.y) / 2);
     }
-
+    
+    /**
+     * Returns the Euclidean distance between two vertices
+     * <p>
+     *
+     * @param vertex second vertex
+     * @return distance between the first and second vertex
+     */
+    public double distance(Vertex2D vertex) {
+        if (vertex == null){
+            return -1.0;
+        }
+        return Math.sqrt(Math.pow(vertex.getX() - this.x, 2) + Math.pow(vertex.getY() - this.y, 2));
+    }
+        
     /**
      * Returns the string representation of a vertex
      * <p>

@@ -5,15 +5,17 @@
  */
 package cz.muni.fi.pb162.project.geometry;
 
+import cz.muni.fi.pb162.project.utils.SimpleMath;
+
 /**
  *
  * @author Lukas Kokodic
  */
-public class Triangle {
+public class Triangle implements Measurable {
 
     private final Vertex2D[] arrayOfVertices = new Vertex2D[3];
     private final Triangle[] arrayOfTriangles = new Triangle[3];
-    private static final double DEVIATION = 0.001; 
+    private static final double DEVIATION = 0.001;
 
     /**
      * Constructor
@@ -29,7 +31,7 @@ public class Triangle {
         this.arrayOfVertices[1] = v1;
         this.arrayOfVertices[2] = v2;
     }
-    
+
     /**
      * Constructor
      * <p>
@@ -83,9 +85,9 @@ public class Triangle {
                 this.arrayOfVertices[2]);
         return true;
     }
-    
+
     void divide(int depth) {
-        if (depth <= 0){
+        if (depth <= 0) {
             return;
         }
         this.divide();
@@ -116,22 +118,21 @@ public class Triangle {
         }
         return this.arrayOfTriangles[index];
     }
-    
-    
+
     /**
      * Returns if triangle is equilateral or not
      * <p>
      * @return true if the triangle is equilateral, false if it isn't
      */
-    boolean isEquilateral(){
+    boolean isEquilateral() {
         double sideA = this.arrayOfVertices[0].distance(this.arrayOfVertices[1]);
         double sideB = this.arrayOfVertices[1].distance(this.arrayOfVertices[2]);
         double sideC = this.arrayOfVertices[2].distance(this.arrayOfVertices[0]);
-        return (Math.abs(sideA - sideB) < DEVIATION) && 
-               (Math.abs(sideB - sideC) < DEVIATION) && 
-               (Math.abs(sideC - sideA) < DEVIATION);
+        return (Math.abs(sideA - sideB) < DEVIATION)
+                && (Math.abs(sideB - sideC) < DEVIATION)
+                && (Math.abs(sideC - sideA) < DEVIATION);
     }
-    
+
     /**
      * Returns the string representation of a triangle
      * <p>
@@ -143,6 +144,16 @@ public class Triangle {
                 + this.arrayOfVertices[0].toString() + " "
                 + this.arrayOfVertices[1].toString() + " "
                 + this.arrayOfVertices[2].toString();
+    }
+
+    @Override
+    public double getWidth() {
+        return SimpleMath.maxX(this) - SimpleMath.minX(this);
+    }
+
+    @Override
+    public double getHeight() {
+        return SimpleMath.maxY(this) - SimpleMath.minY(this);
     }
 
 }

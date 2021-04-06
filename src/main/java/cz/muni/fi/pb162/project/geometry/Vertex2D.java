@@ -49,7 +49,7 @@ public class Vertex2D {
     public Vertex2D createMiddle(Vertex2D vertex) {
         return new Vertex2D((this.x + vertex.x) / 2, (this.y + vertex.y) / 2);
     }
-    
+
     /**
      * Returns the Euclidean distance between two vertices
      * <p>
@@ -58,12 +58,12 @@ public class Vertex2D {
      * @return distance between the first and second vertex
      */
     public double distance(Vertex2D vertex) {
-        if (vertex == null){
+        if (vertex == null) {
             return -1.0;
         }
         return Math.sqrt(Math.pow(vertex.getX() - this.x, 2) + Math.pow(vertex.getY() - this.y, 2));
     }
-        
+
     /**
      * Returns the string representation of a vertex
      * <p>

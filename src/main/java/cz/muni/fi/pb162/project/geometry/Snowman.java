@@ -11,9 +11,9 @@ package cz.muni.fi.pb162.project.geometry;
  */
 public class Snowman {
 
-    public static final int SIZE = 4;
+    public static final int SIZE = 3;
     private final double reductionFactor = 0.8;
-    private Circular[] spheres = new Circular[SIZE];
+    private RegularPolygon[] spheres = new RegularPolygon[SIZE];
 
     /**
      * Constructor
@@ -25,7 +25,7 @@ public class Snowman {
      * @param reductionFactor factor, by which the size of continuous spheres
      * decreases
      */
-    public Snowman(Circular firstSphere, double reductionFactor) {
+    public Snowman(RegularPolygon firstSphere, double reductionFactor) {
         Vertex2D center;
         spheres[0] = firstSphere;
         if (reductionFactor <= 0 || reductionFactor > 1) {
@@ -35,11 +35,12 @@ public class Snowman {
             center = new Vertex2D(spheres[i - 1].getCenter().getX(),
                     spheres[i - 1].getCenter().getY() + spheres[i - 1].getRadius()
                     + spheres[i - 1].getRadius() * reductionFactor);
-            spheres[i] = new Circle(center, spheres[i - 1].getRadius() * reductionFactor);
+            spheres[i] = new GeneralRegularPolygon(center, firstSphere.getNumEdges(),
+                    spheres[i - 1].getRadius() * reductionFactor);
         }
     }
 
-    public Circular[] getBalls() {
+    public RegularPolygon[] getBalls() {
         return this.spheres;
     }
 

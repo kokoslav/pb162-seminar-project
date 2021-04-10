@@ -5,14 +5,13 @@
  */
 package cz.muni.fi.pb162.project.geometry;
 
+import static cz.muni.fi.pb162.project.geometry.Color.RED;
+
 /**
  *
  * @author Lukas Kokodic
  */
-public class Circle implements Measurable, Circular {
-
-    private final Vertex2D center;
-    private final double radius;
+public class Circle extends GeneralRegularPolygon implements Measurable, Circular {
 
     /**
      * Constructor
@@ -33,18 +32,13 @@ public class Circle implements Measurable, Circular {
      * @param radius radius of a circle
      */
     public Circle(Vertex2D center, double radius) {
-        this.center = center;
-        this.radius = radius;
+        super(center, Integer.MAX_VALUE, radius);
+        super.setColor(RED);
     }
 
     @Override
-    public Vertex2D getCenter() {
-        return this.center;
-    }
-
-    @Override
-    public double getRadius() {
-        return this.radius;
+    public double getEdgeLength() {
+        return 0;
     }
 
     /**
@@ -54,16 +48,6 @@ public class Circle implements Measurable, Circular {
      */
     @Override
     public String toString() {
-        return "Circle: center=" + center.toString() + ", radius=" + this.radius;
-    }
-
-    @Override
-    public double getWidth() {
-        return 2 * radius;
-    }
-
-    @Override
-    public double getHeight() {
-        return 2 * radius;
+        return "Circle: center=" + this.getCenter().toString() + ", radius=" + this.getRadius();
     }
 }

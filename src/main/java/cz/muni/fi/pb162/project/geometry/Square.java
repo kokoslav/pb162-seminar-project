@@ -9,10 +9,7 @@ package cz.muni.fi.pb162.project.geometry;
  *
  * @author Lukas Kokodic
  */
-public class Square implements Circular {
-
-    private Vertex2D center;
-    private double diameter;
+public class Square extends GeneralRegularPolygon implements Circular {
 
     /**
      * Constructor
@@ -23,8 +20,7 @@ public class Square implements Circular {
      * @param diameter diameter of the square
      */
     public Square(Vertex2D center, double diameter) {
-        this.center = center;
-        this.diameter = diameter;
+        super(center, 4, diameter / 2);
     }
 
     /**
@@ -38,28 +34,6 @@ public class Square implements Circular {
         this(shape.getCenter(), shape.getRadius() * 2);
     }
 
-    /**
-     * Returns a square vertex
-     * <p>
-     * @param index index of the vertex we want
-     * @return one of the square's vertices, indicated by index
-     */
-    public Vertex2D getVertex(int index) {
-        if (index == 0) {
-            return new Vertex2D(center.getX() - this.getRadius(), center.getY());
-        }
-        if (index == 1) {
-            return new Vertex2D(center.getX(), center.getY() - this.getRadius());
-        }
-        if (index == 2) {
-            return new Vertex2D(center.getX() + this.getRadius(), center.getY());
-        }
-        if (index == 3) {
-            return new Vertex2D(center.getX(), center.getY() + this.getRadius());
-        }
-        return null;
-    }
-
     @Override
     public String toString() {
         String output = "Square: vertices=";
@@ -67,15 +41,5 @@ public class Square implements Circular {
             output = output + this.getVertex(i).toString() + " ";
         }
         return output + this.getVertex(3).toString();
-    }
-
-    @Override
-    public Vertex2D getCenter() {
-        return this.center;
-    }
-
-    @Override
-    public double getRadius() {
-        return this.diameter / 2;
     }
 }

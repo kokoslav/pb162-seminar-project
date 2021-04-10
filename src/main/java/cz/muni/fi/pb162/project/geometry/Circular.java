@@ -1,7 +1,8 @@
 package cz.muni.fi.pb162.project.geometry;
 
 /**
- * Class represents circle that passes through every vertex of 2d geometry object.
+ * Class represents circle that passes through every vertex of 2d geometry
+ * object.
  *
  * @author Marek Sabo
  */

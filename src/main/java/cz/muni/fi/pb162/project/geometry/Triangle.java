@@ -11,9 +11,7 @@ import cz.muni.fi.pb162.project.utils.SimpleMath;
  *
  * @author Lukas Kokodic
  */
-public class Triangle implements Measurable {
-
-    private final Vertex2D[] arrayOfVertices = new Vertex2D[3];
+public class Triangle extends ArrayPolygon implements Measurable {
     private final Triangle[] arrayOfTriangles = new Triangle[3];
     private static final double DEVIATION = 0.001;
 
@@ -27,9 +25,7 @@ public class Triangle implements Measurable {
      * @param v2 third vertex of a triangle
      */
     public Triangle(Vertex2D v0, Vertex2D v1, Vertex2D v2) {
-        this.arrayOfVertices[0] = v0;
-        this.arrayOfVertices[1] = v1;
-        this.arrayOfVertices[2] = v2;
+        super(new Vertex2D[] {v0, v1, v2});
     }
 
     /**
@@ -48,21 +44,6 @@ public class Triangle implements Measurable {
     }
 
     /**
-     * Returns one vertex of a triangle
-     * <p>
-     * returns one of the vertices, indicated by index
-     *
-     * @param index of the vertex we want to be returned
-     * @return one of the vertices or null if index is out of range(0-2)
-     */
-    public Vertex2D getVertex(int index) {
-        if ((index < 0) | (index > 2)) {
-            return null;
-        }
-        return this.arrayOfVertices[index];
-    }
-
-    /**
      * Divides a triangle into 3 subTriangles
      * <p>
      * Divides a triangle if it hasn't been divided already Puts the created
@@ -74,15 +55,15 @@ public class Triangle implements Measurable {
         if (this.isDivided()) {
             return false;
         }
-        this.arrayOfTriangles[0] = new Triangle(this.arrayOfVertices[0],
-                arrayOfVertices[0].createMiddle(arrayOfVertices[1]),
-                arrayOfVertices[0].createMiddle(arrayOfVertices[2]));
-        this.arrayOfTriangles[1] = new Triangle(arrayOfVertices[1].createMiddle(arrayOfVertices[0]),
-                this.arrayOfVertices[1],
-                arrayOfVertices[1].createMiddle(arrayOfVertices[2]));
-        this.arrayOfTriangles[2] = new Triangle(arrayOfVertices[2].createMiddle(arrayOfVertices[0]),
-                arrayOfVertices[2].createMiddle(arrayOfVertices[1]),
-                this.arrayOfVertices[2]);
+        this.arrayOfTriangles[0] = new Triangle(this.getVertex(0),
+                this.getVertex(0).createMiddle(this.getVertex(1)),
+                this.getVertex(0).createMiddle(this.getVertex(2)));
+        this.arrayOfTriangles[1] = new Triangle(this.getVertex(1).createMiddle(this.getVertex(0)),
+                this.getVertex(1),
+                this.getVertex(1).createMiddle(this.getVertex(2)));
+        this.arrayOfTriangles[2] = new Triangle(this.getVertex(2).createMiddle(this.getVertex(0)),
+                this.getVertex(2).createMiddle(this.getVertex(1)),
+                this.getVertex(2));
         return true;
     }
 
@@ -125,9 +106,9 @@ public class Triangle implements Measurable {
      * @return true if the triangle is equilateral, false if it isn't
      */
     boolean isEquilateral() {
-        double sideA = this.arrayOfVertices[0].distance(this.arrayOfVertices[1]);
-        double sideB = this.arrayOfVertices[1].distance(this.arrayOfVertices[2]);
-        double sideC = this.arrayOfVertices[2].distance(this.arrayOfVertices[0]);
+        double sideA = this.getVertex(0).distance(this.getVertex(1));
+        double sideB = this.getVertex(1).distance(this.getVertex(2));
+        double sideC = this.getVertex(2).distance(this.getVertex(0));
         return (Math.abs(sideA - sideB) < DEVIATION)
                 && (Math.abs(sideB - sideC) < DEVIATION)
                 && (Math.abs(sideC - sideA) < DEVIATION);
@@ -141,9 +122,9 @@ public class Triangle implements Measurable {
     @Override
     public String toString() {
         return "Triangle: vertices="
-                + this.arrayOfVertices[0].toString() + " "
-                + this.arrayOfVertices[1].toString() + " "
-                + this.arrayOfVertices[2].toString();
+                + this.getVertex(0).toString() + " "
+                + this.getVertex(1).toString() + " "
+                + this.getVertex(2).toString();
     }
 
     @Override

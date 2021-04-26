@@ -5,6 +5,8 @@
  */
 package cz.muni.fi.pb162.project.geometry;
 
+import java.util.Objects;
+
 /**
  *
  * @author Lukas Kokodic
@@ -72,6 +74,37 @@ public class Vertex2D {
     @Override
     public String toString() {
         return "[" + this.x + ", " + this.y + "]";
+    }
+    
+    /**
+     * Compares two vertices
+     * <p>
+     * @return if these two vertices are equal
+     */
+    @Override
+    public boolean equals(Object o) {
+
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Vertex2D)) {
+            return false;
+        }
+
+        Vertex2D vertex = (Vertex2D) o;
+
+        return (vertex.x == this.x) &&
+                (vertex.y == this.y);
+    }
+
+    /**
+     * Returns the hash code
+     * <p>
+     * @return hash code
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 
 }

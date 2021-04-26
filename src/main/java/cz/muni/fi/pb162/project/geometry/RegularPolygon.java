@@ -1,8 +1,7 @@
 package cz.muni.fi.pb162.project.geometry;
 
 /**
- * Interface for convex regular polygons, e.g. equilateral triangle, square,
- * regular octagon.
+ * Interface for convex regular polygons, e.g. equilateral triangle, square, regular octagon.
  *
  * @author Radek Oslejsek, Marek Sabo
  */
@@ -23,8 +22,8 @@ public interface RegularPolygon extends Measurable, Circular {
     double getEdgeLength();
 
     /**
-     * Returns vertex at a given index modulo number of indices, in a
-     * counter-clockwise order.
+     * Returns vertex at a given index modulo number of indices,
+     * in a counter-clockwise order.
      *
      * @param index integral number of index
      * @return vertex at given index

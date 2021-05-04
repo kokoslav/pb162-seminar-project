@@ -14,6 +14,24 @@ import cz.muni.fi.pb162.project.utils.SimpleMath;
 public abstract class SimplePolygon extends SimpleMath implements Polygon {
     
     /**
+     * Constructor
+     * <p>
+     * this method is used for creating a SimplePolygon
+     *
+     * @param coordinates array of vertices of a polygon
+     */
+    public SimplePolygon(Vertex2D[] coordinates) {
+        if (coordinates == null) {
+            throw new IllegalArgumentException("coordinates array is null");
+        }
+        for (int i = 0; i < coordinates.length; i++) {
+            if (coordinates[i] == null) {
+                throw new IllegalArgumentException(i + ". coordinate in array is null");
+            }
+        }
+    }
+    
+    /**
      * Returns the height of a polygon
      * <p>
      * @return difference between maxY and minY

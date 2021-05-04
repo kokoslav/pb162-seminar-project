@@ -22,17 +22,7 @@ public class ArrayPolygon extends SimplePolygon {
      * @param coordinates array of vertices of a polygon
      */
     public ArrayPolygon(Vertex2D[] coordinates) {
-        if (coordinates == null) {
-            throw new IllegalArgumentException("coordinates array is null");
-        }
-        if (coordinates.length < 3) {
-            throw new IllegalArgumentException("coordinates array has less than 3 vertices");
-        }
-        for (int i = 0; i < coordinates.length; i++) {
-            if (coordinates[i] == null) {
-                throw new IllegalArgumentException(i + ". coordinate in array is null");
-            }
-        }
+        super(coordinates);
         this.coordinates = new Vertex2D[coordinates.length];
         this.coordinates = Arrays.copyOf(coordinates, coordinates.length);
     }

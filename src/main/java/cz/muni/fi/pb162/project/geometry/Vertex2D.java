@@ -83,7 +83,6 @@ public class Vertex2D {
      */
     @Override
     public boolean equals(Object o) {
-
         if (o == this) {
             return true;
         }

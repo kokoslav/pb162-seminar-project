@@ -50,7 +50,7 @@ public class ColoredPolygon {
         
         ColoredPolygon coloredPolygon = (ColoredPolygon) o;
         return ((this.color == coloredPolygon.getColor()) &&
-                 this.polygon == coloredPolygon.polygon);
+                 this.polygon.equals(coloredPolygon.polygon));
     }
     
     /**

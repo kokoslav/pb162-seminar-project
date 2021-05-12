@@ -8,7 +8,6 @@ package cz.muni.fi.pb162.project.geometry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -26,8 +25,7 @@ public class CollectionPolygon extends SimplePolygon {
      */
     public CollectionPolygon(Vertex2D[] coordinates) {
         super(coordinates);
-        this.coordinates = Arrays.stream(coordinates)
-                          .collect(Collectors.toCollection(ArrayList::new));
+        this.coordinates = new ArrayList<>(Arrays.asList(coordinates));
     }
     
     /**
@@ -38,12 +36,28 @@ public class CollectionPolygon extends SimplePolygon {
      * @param coordinates List of vertices of a polygon
      */
     public CollectionPolygon(List<Vertex2D> coordinates){
-        this(coordinates.toArray(new Vertex2D[0]));  
+        this(coordinates.toArray(new Vertex2D[0]));
     }
     
     @Override
     public boolean equals(Object o) {
-        return this.equals(o);
+        if (o == this) {
+            return true;
+        }
+        if (o.getClass() != this.getClass()) {
+            return false;
+        }
+
+        CollectionPolygon collectionPolygon = (CollectionPolygon) o;
+        if (collectionPolygon.getNumVertices() != this.getNumVertices()) {
+            return false;
+        }
+        for (int i = 0; i < this.getNumVertices(); i++) {
+            if (this.getVertex(i) != collectionPolygon.getVertex(i)) {
+                return false;
+            }
+        }
+        return true;
     }
     
     /**

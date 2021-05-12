@@ -5,6 +5,7 @@
  */
 package cz.muni.fi.pb162.project.geometry;
 
+import cz.muni.fi.pb162.project.exception.MissingVerticesException;
 import cz.muni.fi.pb162.project.utils.SimpleMath;
 
 /**
@@ -19,10 +20,15 @@ public abstract class SimplePolygon extends SimpleMath implements Polygon {
      * this method is used for creating a SimplePolygon
      *
      * @param coordinates array of vertices of a polygon
+     * @throws MissingVerticesException when there are less than 3 vertices
+     * @throws IllegalArgumentException when coordinates array is null or any of its vertices are null
      */
-    public SimplePolygon(Vertex2D[] coordinates) {
+    public SimplePolygon(Vertex2D[] coordinates) throws MissingVerticesException, IllegalArgumentException {
         if (coordinates == null) {
             throw new IllegalArgumentException("coordinates array is null");
+        }
+        if (coordinates.length < 3) {
+            throw new MissingVerticesException("There are " + coordinates.length + " vertices missing");
         }
         for (int i = 0; i < coordinates.length; i++) {
             if (coordinates[i] == null) {

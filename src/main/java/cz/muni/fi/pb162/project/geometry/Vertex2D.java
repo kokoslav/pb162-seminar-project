@@ -13,7 +13,7 @@ import java.util.Objects;
  *
  * Represents a 2D vertex Has 2 parameters: x and y
  */
-public class Vertex2D {
+public class Vertex2D implements Comparable<Vertex2D>{
 
     private final double x;
     private final double y;
@@ -104,6 +104,26 @@ public class Vertex2D {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+    
+    /**
+     * Compares two vertices
+     * <p>
+     * @param o vertex
+     * @return comparison of 2 vertices
+     */
+    @Override
+    public int compareTo(Vertex2D o) {
+        if (o == null) {
+            throw new IllegalArgumentException();
+        }
+        if (o.getClass() != Vertex2D.class) {
+            throw new IllegalArgumentException();
+        }
+        if (Double.compare(this.getX(), o.getX()) == 0) {
+            return Double.compare(this.getY(), o.getY());
+        }
+        return Double.compare(this.getX(), o.getX());
     }
 
 }

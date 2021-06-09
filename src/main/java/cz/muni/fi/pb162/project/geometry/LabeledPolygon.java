@@ -5,7 +5,19 @@
  */
 package cz.muni.fi.pb162.project.geometry;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import cz.muni.fi.pb162.project.exception.MissingVerticesException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -23,7 +35,7 @@ import java.util.TreeSet;
  *
  * @author Lukas Kokodic
  */
-public final class LabeledPolygon extends SimplePolygon implements Labelable, Sortable {
+public final class LabeledPolygon extends SimplePolygon implements Labelable, Sortable, PolygonWritable {
     private Map<String, Vertex2D> vertices = new HashMap<>();
 
     private LabeledPolygon(Map<String, Vertex2D> coordinates) throws MissingVerticesException,
@@ -90,6 +102,36 @@ public final class LabeledPolygon extends SimplePolygon implements Labelable, So
         }
         return keys;
     }
+
+    @Override
+    public void write(OutputStream os) throws IOException {
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os))) {
+            for (String key : vertices.keySet()) {
+                Vertex2D vertex = vertices.get(key);
+                bw.write(vertex.getX() + " " + vertex.getY() + " " + key + "\n");
+            }
+        }
+    }
+
+    @Override
+    public void write(File file) throws IOException {
+        write(new FileOutputStream(file));
+    }
+    
+    /**
+        *
+        * This method is used for writing a map in JSON format to the output stream
+        * @param os AoutputStream
+        */
+    public void writeJson(OutputStream os) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String output = gson.toJson(this.vertices);
+        try {
+            os.write(output.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     /**
      *
@@ -97,7 +139,7 @@ public final class LabeledPolygon extends SimplePolygon implements Labelable, So
     *
     * This class is used for building a LabeledPolygon
     */
-    public static class Builder implements Buildable<LabeledPolygon> {
+    public static class Builder implements Buildable<LabeledPolygon>, PolygonReadable {
         private Map<String, Vertex2D> vertices = new HashMap<>();
         
         /**
@@ -119,6 +161,30 @@ public final class LabeledPolygon extends SimplePolygon implements Labelable, So
         public LabeledPolygon build() {
             LabeledPolygon polygon = new LabeledPolygon(vertices);
             return polygon;
+        }
+
+        @Override
+        public PolygonReadable read(InputStream is) throws IOException {
+           BufferedReader br = new BufferedReader(new InputStreamReader(is));
+           String line = "";
+           while ((line = br.readLine()) != null) {
+               String [] split = line.split(" ", 3);
+               if (split.length != 3) {
+                   throw new IOException();
+               }
+               try {
+                   this.addVertex(split[2], new Vertex2D(Double.parseDouble(split[0]), Double.parseDouble(split[1])));
+               } catch (NumberFormatException e) {
+                   throw new IOException(e);
+               }
+           }
+           return this;
+        }
+
+        @Override
+        public PolygonReadable read(File file) throws IOException {
+            read(new FileInputStream(file));
+            return this;
         }
         
     }
